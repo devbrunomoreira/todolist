@@ -1,0 +1,29 @@
+.card {
+  display: flex;
+  width: 80%;
+  margin: 20px auto;
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #888888;
+}
+
+.card__content{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.card__content--header{
+  display: flex;
+  background-color: lightskyblue;
+  justify-content: flex-start;
+}
+.card__content--text{
+  display: flex;
+  justify-content: flex-start;
+}
+h1{
+  font-size: medium;
+}
+h2{
+  font-size: small;
+}
