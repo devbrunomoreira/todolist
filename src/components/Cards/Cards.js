@@ -48,8 +48,8 @@ const Cards = props => {
     ]);
   };
   const removeCard = item => {
-    let filter = listCard.filter(element => element.id !== item.id);
-    setListCard(filter);
+    let filtered = listCard.filter(element => element.id !== item.id);
+    setListCard(filtered);
   };
   return (
     <div>
