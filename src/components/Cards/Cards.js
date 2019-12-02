@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as actionTypes from "../../actions";
 import Card from "../Card/Card";
 import Modal from "@material-ui/core/Modal";
-import logo from "../../assets/imgs/todoIconDone.png";
-import userIcon from "../../assets/imgs/userIcon.svg";
-import addIcon from "../../assets/imgs/addIcon.svg";
-import './Cards.scss'
+import Header from "../Header/Header";
+import "./Cards.scss";
 
 const Cards = props => {
-  const [listCard, setListCard] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [textCard, setTextCard] = useState("");
   const [countID, setCountID] = useState(0);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const listCard = useSelector(state => state.cardState.listCard);
 
   const handleOpen = () => {
     setOpen(true);
@@ -23,47 +23,32 @@ const Cards = props => {
   };
 
   const handleCard = () => {
-    setListCard([
-      ...listCard,
-      {
-        title: userInput,
-        text: textCard,
-        checked: false,
-        id: countID
-      }
-    ]);
     setCountID(countID + 1);
+    const card = {
+      title: userInput,
+      text: textCard,
+      checked: false,
+      id: countID
+    };
+    dispatch(
+      actionTypes.addCard(card)
+    );
+
+    handleClose();
+    setUserInput("");
+    setTextCard("");
   };
   const handleChecked = item => {
-    let index = listCard.findIndex(element => element.id === item.id);
-    setListCard([
-      ...listCard.slice(0, index),
-      {
-        title: item.title,
-        text: item.text,
-        checked: !item.checked,
-        id: item.id
-      },
-      ...listCard.slice(index + 1)
-    ]);
+    dispatch(actionTypes.handleCheck(item.id));
   };
   const removeCard = item => {
-    let filtered = listCard.filter(element => element.id !== item.id);
-    setListCard(filtered);
+    dispatch(actionTypes.removeCard(item.id));
   };
   return (
     <div>
       <div>
         <div>
-          <div className="header">
-            <img src={addIcon} className="header__add" onClick={handleOpen} />
-            <div className="header__middle">
-              <img src={logo} className="header__logo" />
-              <h3>TO DO LIST</h3>
-            </div>
-            <img src={userIcon} className="header__user" />
-          </div>
-
+          <Header onClickLeft={handleOpen} />
           <Modal
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"

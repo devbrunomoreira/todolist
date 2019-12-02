@@ -1,7 +1,7 @@
-import { clickReducer } from "./clickReducer";
+import { cardReducer } from "./cardReducer";
 
 import { combineReducers } from "redux";
 
 export const Reducers = combineReducers({
-  clickState: clickReducer
+  cardState: cardReducer
 });

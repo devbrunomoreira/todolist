@@ -7,23 +7,25 @@
   box-shadow: 5px 10px 8px #888888;
 }
 
-.card__content{
+.card__content {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-.card__content--header{
+.card__content--header {
   display: flex;
   background-color: lightskyblue;
   justify-content: flex-start;
 }
-.card__content--text{
+.card__content--text {
   display: flex;
   justify-content: flex-start;
+  width: 100%;
+  word-break: break-all;
 }
-h1{
+h1 {
   font-size: medium;
 }
-h2{
+h2 {
   font-size: small;
 }
