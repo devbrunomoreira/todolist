@@ -1,4 +1,3 @@
-import axios from "../services/axios";
 import * as actionType from "../actions/actionType";
 
 const initialState = {
@@ -7,19 +6,13 @@ const initialState = {
 export const cardReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.ADD_CARD:
-      axios
-        .post("/cards.json", action.payload)
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
       return {
         ...state,
         listCard: [...state.listCard, action.payload]
       };
-      case actionType.ADD_CARD_SUCCES:
-        return{
-          ...state,
-          listCard: [...state.listCard, action.payload]
-        }
+    case actionType.ADD_CARD_SUCCESS:
+      console.log("Add_card_success");
+      return state;
     case actionType.HANDLE_CHECK:
       let newListCard = state.listCard;
       const newIndex = newListCard.findIndex(
@@ -33,14 +26,29 @@ export const cardReducer = (state = initialState, action) => {
         ...state,
         listCard: newListCard
       };
-      case actionType.REMOVE_CARD:
-        let newListRemove = state.listCard.filter((item)=>(
-          item.id !== action.payload
-        ))
+    case actionType.REMOVE_CARD:
+      let newListRemove = state.listCard.filter(
+        item => item.id !== action.payload
+      );
+      return {
+        ...state,
+        listCard: newListRemove
+      };
+    case actionType.FETCH_DATA:
+      return state;
+    case actionType.FETCH_DATA_SUCCESS:
+      if (action.payload === undefined) {
         return {
           ...state,
-          listCard: newListRemove
-        }
+          listCard: []
+        };
+      }
+      return {
+        ...state,
+        listCard: action.payload
+      };
+    case actionType.FETCH_DATA_FAILURE:
+      return state;
     default:
       return state;
   }

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionTypes from "../../actions";
 import Card from "../Card/Card";
 import Modal from "@material-ui/core/Modal";
 import Header from "../Header/Header";
 import "./Cards.scss";
+import axios from "../../services/axios";
 
 const Cards = props => {
   const [userInput, setUserInput] = useState("");
@@ -13,6 +14,19 @@ const Cards = props => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const listCard = useSelector(state => state.cardState.listCard);
+
+  useEffect(() => {
+    dispatch(actionTypes.fetchData());
+  }, []);
+
+  useEffect(() => {
+    listCard.map(todo => {
+      let id = todo.id;
+      if (id > countID) {
+        setCountID(id + 1);
+      }
+    });
+  }, [listCard]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -23,16 +37,14 @@ const Cards = props => {
   };
 
   const handleCard = () => {
-    setCountID(countID + 1);
     const card = {
       title: userInput,
       text: textCard,
       checked: false,
       id: countID
     };
-    dispatch(
-      actionTypes.addCard(card)
-    );
+    setCountID(countID + 1);
+    dispatch(actionTypes.addCard(card));
 
     handleClose();
     setUserInput("");

@@ -15,6 +15,7 @@ const Card = ({ item, removeCard, handleChecked }) => {
         </header>
         <div className="card__content--text">
           <h2>{item.text}</h2>
+          <h3>{item.id}</h3>
         </div>
         <button onClick={() => removeCard(item)}>remover</button>
       </div>
