@@ -6,17 +6,16 @@ const initialState = {
 export const cardReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.ADD_CARD:
+      return state;
+    case actionType.ADD_CARD_SUCCESS:
       return {
         ...state,
         listCard: [...state.listCard, action.payload]
       };
-    case actionType.ADD_CARD_SUCCESS:
-      console.log("Add_card_success");
-      return state;
     case actionType.HANDLE_CHECK:
       let newListCard = state.listCard;
       const newIndex = newListCard.findIndex(
-        item => item.id === action.payload
+        item => item.name === action.payload
       );
       newListCard[newIndex] = {
         ...newListCard[newIndex],
@@ -27,12 +26,11 @@ export const cardReducer = (state = initialState, action) => {
         listCard: newListCard
       };
     case actionType.REMOVE_CARD:
-      let newListRemove = state.listCard.filter(
-        item => item.id !== action.payload
-      );
+      return state;
+    case actionType.REMOVE_CARD_SUCCESS:
       return {
         ...state,
-        listCard: newListRemove
+        listCard: state.listCard.filter(item => item.name !== action.payload)
       };
     case actionType.FETCH_DATA:
       return state;

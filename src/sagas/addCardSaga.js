@@ -5,14 +5,15 @@ import * as actionType from "../actions/actionType";
 const apiCall = card =>
   axios
     .post("/cards.json", card)
-    .then(res => console.log(res))
+    .then(res => res.data.name)
     .catch(error => console.log(error));
 
 export function* addCardSaga(action) {
-  console.log("params: ", action);
-  yield call(apiCall, action.payload);
+  const nameID = yield call(apiCall, action.payload);
+  action.payload.name = nameID;
   yield put({
-    type: actionType.ADD_CARD_SUCCESS
+    type: actionType.ADD_CARD_SUCCESS,
+    payload: action.payload
   });
 }
 
@@ -20,7 +21,10 @@ const apiGetDataFromFirebase = () =>
   axios
     .get("/cards.json")
     .then(res => {
-      return Object.values(res.data);
+      return Object.entries(res.data).map(([key, value]) => ({
+        ...value,
+        name: key
+      }));
     })
     .catch(err => console.log(err));
 

@@ -45,16 +45,15 @@ const Cards = props => {
     };
     setCountID(countID + 1);
     dispatch(actionTypes.addCard(card));
-
     handleClose();
     setUserInput("");
     setTextCard("");
   };
   const handleChecked = item => {
-    dispatch(actionTypes.handleCheck(item.id));
+    dispatch(actionTypes.handleCheck(item.name));
   };
   const removeCard = item => {
-    dispatch(actionTypes.removeCard(item.id));
+    dispatch(actionTypes.removeCard(item.name));
   };
   return (
     <div>

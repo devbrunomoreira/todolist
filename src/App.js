@@ -1,17 +1,7 @@
 import React from 'react';
-import Cards from './components/Cards/Cards';
-import Header from './components/Header/Header'
-
+import Routes from './routes/routes'
 import './App.css';
-import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      
-      <Cards />
-    </div>
-  );
-}
+const App = () => <Routes />;
 
 export default App;
