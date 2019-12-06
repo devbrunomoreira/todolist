@@ -1,7 +1,10 @@
-import { cardReducer } from "./cardReducer";
+import { combineReducers } from 'redux';
+import cardReducer from './cardReducer';
+import authReducer from './authReducer';
 
-import { combineReducers } from "redux";
-
-export const Reducers = combineReducers({
-  cardState: cardReducer
+const Reducers = combineReducers({
+  cardState: cardReducer,
+  authState: authReducer,
 });
+
+export default Reducers;

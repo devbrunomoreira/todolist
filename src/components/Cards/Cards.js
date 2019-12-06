@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as actionTypes from "../../actions";
-import Card from "../Card/Card";
-import Modal from "@material-ui/core/Modal";
-import Header from "../Header/Header";
-import "./Cards.scss";
-import axios from "../../services/axios";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Modal from '@material-ui/core/Modal';
+import * as actionTypes from '../../actions';
+import Card from '../Card/Card';
+import Header from '../Header/Header';
+import './Cards.scss';
 
 const Cards = props => {
-  const [userInput, setUserInput] = useState("");
-  const [textCard, setTextCard] = useState("");
+  const [userInput, setUserInput] = useState('');
+  const [textCard, setTextCard] = useState('');
   const [countID, setCountID] = useState(0);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const listCard = useSelector(state => state.cardState.listCard);
+  const uid = useSelector(state => {
+    if (state.authState.user.uid) return state.authState.user.uid;
+    return state.authState.user.user.uid;
+  });
 
   useEffect(() => {
-    dispatch(actionTypes.fetchData());
+    dispatch(actionTypes.fetchData(uid));
   }, []);
 
   useEffect(() => {
     listCard.map(todo => {
-      let id = todo.id;
+      const { id } = todo;
       if (id > countID) {
-        setCountID(id + 1);
+        return setCountID(id + 1);
       }
     });
   }, [listCard]);
@@ -41,19 +44,19 @@ const Cards = props => {
       title: userInput,
       text: textCard,
       checked: false,
-      id: countID
+      id: countID,
     };
     setCountID(countID + 1);
-    dispatch(actionTypes.addCard(card));
+    dispatch(actionTypes.addCard(card, uid));
     handleClose();
-    setUserInput("");
-    setTextCard("");
+    setUserInput('');
+    setTextCard('');
   };
   const handleChecked = item => {
     dispatch(actionTypes.handleCheck(item.name));
   };
   const removeCard = item => {
-    dispatch(actionTypes.removeCard(item.name));
+    dispatch(actionTypes.removeCard(item.name, uid));
   };
   return (
     <div>
@@ -87,7 +90,9 @@ const Cards = props => {
                   className="modal__form--text"
                 />
               </div>
-              <button onClick={() => handleCard()}>Cadastar</button>
+              <button type="submit" onClick={() => handleCard()}>
+                Cadastar
+              </button>
             </div>
           </Modal>
         </div>

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import "./Card.scss";
+import React, { useState } from 'react';
+import './Card.scss';
 
-const Card = ({ item, removeCard, handleChecked }) => {
-  return (
+const Card = ({ item, removeCard, handleChecked }) => (
     <div className="card">
       <input
         type="checkbox"
@@ -21,6 +20,5 @@ const Card = ({ item, removeCard, handleChecked }) => {
       </div>
     </div>
   );
-};
 
 export default Card;

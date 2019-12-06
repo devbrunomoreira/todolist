@@ -1,36 +1,36 @@
-import * as actionType from "../actions/actionType";
+import * as actionType from '../actions/actionType';
 
 const initialState = {
-  listCard: []
+  listCard: [],
 };
 export const cardReducer = (state = initialState, action) => {
+  let newListCard;
+  let newIndex;
   switch (action.type) {
     case actionType.ADD_CARD:
       return state;
     case actionType.ADD_CARD_SUCCESS:
       return {
         ...state,
-        listCard: [...state.listCard, action.payload]
+        listCard: [...state.listCard, action.payload],
       };
     case actionType.HANDLE_CHECK:
-      let newListCard = state.listCard;
-      const newIndex = newListCard.findIndex(
-        item => item.name === action.payload
-      );
+      newListCard = state.listCard;
+      newIndex = newListCard.findIndex(item => item.name === action.payload);
       newListCard[newIndex] = {
         ...newListCard[newIndex],
-        checked: !newListCard[newIndex].checked
+        checked: !newListCard[newIndex].checked,
       };
       return {
         ...state,
-        listCard: newListCard
+        listCard: newListCard,
       };
     case actionType.REMOVE_CARD:
       return state;
     case actionType.REMOVE_CARD_SUCCESS:
       return {
         ...state,
-        listCard: state.listCard.filter(item => item.name !== action.payload)
+        listCard: state.listCard.filter(item => item.name !== action.payload),
       };
     case actionType.FETCH_DATA:
       return state;
@@ -38,12 +38,12 @@ export const cardReducer = (state = initialState, action) => {
       if (action.payload === undefined) {
         return {
           ...state,
-          listCard: []
+          listCard: [],
         };
       }
       return {
         ...state,
-        listCard: action.payload
+        listCard: action.payload,
       };
     case actionType.FETCH_DATA_FAILURE:
       return state;
@@ -51,3 +51,5 @@ export const cardReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default cardReducer;
